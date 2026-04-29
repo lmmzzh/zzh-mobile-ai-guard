@@ -48,6 +48,22 @@ zmg report
 
 You can finish the first run without editing `rules.yml`.
 
+## Example output
+
+```text
+检查完成：未发现明显风险，可以继续按正常流程验证。
+
+改动文件：0 个
+新增/删除：+0 / -0
+
+未发现明显结构风险。
+注意：这不代表业务功能已经验证通过。
+
+完整报告：.zzh-mobile-ai-guard/reports/2026-04-29T04-51-09-253Z-check.md
+```
+
+The report always starts with a conclusion, then lists changed files, risks, manual verification items, and suggested next steps.
+
 ## License
 
 MIT
