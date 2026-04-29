@@ -53,7 +53,7 @@ export function runCli(args, cwd) {
         break;
       case "-v":
       case "--version":
-        console.log("0.1.0");
+        console.log("0.1.1");
         break;
       default:
         console.error(`Unknown command: ${command}`);

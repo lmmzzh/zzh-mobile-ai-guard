@@ -32,7 +32,7 @@ export function runCheck(root) {
   const reportPath = guardPath(root, REPORTS_DIR, `${timestamp}-check.md`);
   const result = {
     tool: "zzh-mobile-ai-guard",
-    version: "0.1.0",
+    version: "0.1.1",
     checkedAt: new Date().toISOString(),
     pass,
     severity,
