@@ -4,8 +4,8 @@
   "description": "A lightweight AI coding guard for iOS and Flutter projects.",
   "type": "module",
   "bin": {
-    "zmg": "./bin/zmg.js",
-    "zzh-mobile-ai-guard": "./bin/zmg.js"
+    "zmg": "bin/zmg.js",
+    "zzh-mobile-ai-guard": "bin/zmg.js"
   },
   "files": [
     "bin",
