@@ -9,7 +9,7 @@ export function runStart(root) {
   const rules = loadRules(root);
   const baseline = {
     tool: "zzh-mobile-ai-guard",
-    version: "0.1.1",
+    version: "0.1.2",
     createdAt: new Date().toISOString(),
     rootName: path.basename(root),
     project: rules.project,
