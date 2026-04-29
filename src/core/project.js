@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { defaultMobileRules } from "./mobile-rules.js";
 
 const IGNORED_DIRS = new Set([
   ".git",
@@ -58,82 +59,9 @@ function scanProjectFlags(dir, depth) {
 }
 
 export function defaultRules(project) {
-  const iosProtected = [
-    "**/FaceScan/**",
-    "**/Payment/**",
-    "**/Subscription/**",
-    "**/*Bridging-Header.h"
-  ];
-
-  const flutterProtected = [
-    "lib/features/auth/**",
-    "lib/features/payment/**",
-    "lib/features/subscription/**",
-    "ios/Runner/**",
-    "android/app/**"
-  ];
-
-  const iosRisk = [
-    "Podfile",
-    "Podfile.lock",
-    "**/*.entitlements",
-    "**/Info.plist",
-    "**/GoogleService-Info.plist",
-    "**/*Bridging-Header.h",
-    "**/*.xcodeproj/**",
-    "**/*.xcworkspace/**"
-  ];
-
-  const flutterRisk = [
-    "pubspec.yaml",
-    "pubspec.lock",
-    "ios/Runner/Info.plist",
-    "android/app/build.gradle",
-    "android/app/src/main/AndroidManifest.xml"
-  ];
-
-  const isIos = project.type === "ios" || project.type === "mixed";
-  const isFlutter = project.type === "flutter" || project.type === "mixed";
-
   return {
     project,
-    protected_paths: [
-      ...(isIos ? iosProtected : []),
-      ...(isFlutter ? flutterProtected : [])
-    ],
-    risk_files: [
-      ...(isIos ? iosRisk : []),
-      ...(isFlutter ? flutterRisk : [])
-    ],
-    change_limits: {
-      max_changed_files: 20,
-      max_added_lines: 800,
-      max_deleted_lines: 800,
-      max_single_file_added_lines: 250
-    },
-    function_limits: {
-      max_file_lines: 1200,
-      max_function_lines: 120
-    },
-    temporary_code_patterns: [
-      "TODO: remove",
-      "FIXME: temporary",
-      "forceUnlock",
-      "bypass",
-      "mockUser",
-      "debugOnly",
-      "return true",
-      "fatalError",
-      "try!",
-      "as!"
-    ],
-    verification: {
-      required_manual_checks: [
-        "项目能否编译通过",
-        "本轮涉及页面是否能正常打开",
-        "已验证主链路是否仍然正常"
-      ]
-    }
+    ...defaultMobileRules(project)
   };
 }
 

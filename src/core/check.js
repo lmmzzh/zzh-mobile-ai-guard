@@ -8,8 +8,10 @@ import { changedFilesFromGit, diffNumstat, gitInfo } from "./git.js";
 import { scanFiles, readTextIfAvailable } from "./files.js";
 import { matchesAny } from "./glob.js";
 import { renderMarkdownReport } from "./report.js";
+import { enrichRisk } from "./risk-explanations.js";
+import { VERSION } from "./version.js";
 
-export function runCheck(root) {
+export function runCheck(root, options = {}) {
   const baselinePath = guardPath(root, BASELINES_DIR, LATEST_BASELINE);
   if (!exists(baselinePath)) {
     throw new Error("还没有记录改代码前状态，请先运行：zmg start");
@@ -32,7 +34,7 @@ export function runCheck(root) {
   const reportPath = guardPath(root, REPORTS_DIR, `${timestamp}-check.md`);
   const result = {
     tool: "zzh-mobile-ai-guard",
-    version: "0.1.2",
+    version: VERSION,
     checkedAt: new Date().toISOString(),
     pass,
     severity,
@@ -50,6 +52,10 @@ export function runCheck(root) {
   writeJson(guardPath(root, REPORTS_DIR, `${timestamp}-check.json`), result);
   writeMarkdown(reportPath, renderMarkdownReport(result));
   printConsoleSummary(result);
+
+  if (options.strict && !result.pass) {
+    process.exitCode = 1;
+  }
 }
 
 function changedFilesFromBaseline(before, after) {
@@ -133,9 +139,37 @@ function collectRisks(root, changedFiles, stats, rules, currentFiles) {
 }
 
 function findTemporaryCode(root, file, patterns) {
+  if (!shouldScanTemporaryCode(file)) return [];
   const content = readTextIfAvailable(root, file);
   if (!content) return [];
-  return patterns.filter((pattern) => pattern && content.includes(pattern));
+  return patterns.filter((pattern) => hasTemporaryPattern(content, pattern));
+}
+
+function shouldScanTemporaryCode(file) {
+  const ext = path.extname(file).toLowerCase();
+  const skipped = new Set([
+    ".md",
+    ".markdown",
+    ".txt",
+    ".json",
+    ".yml",
+    ".yaml"
+  ]);
+
+  return !skipped.has(ext);
+}
+
+function hasTemporaryPattern(content, pattern) {
+  if (!pattern) return false;
+
+  return content
+    .split(/\r?\n/)
+    .some((line) => line.includes(pattern) && !isPatternDefinitionLine(line, pattern));
+}
+
+function isPatternDefinitionLine(line, pattern) {
+  const trimmed = line.trim();
+  return trimmed === JSON.stringify(pattern) || trimmed === `${JSON.stringify(pattern)},`;
 }
 
 function verificationSuggestions(changedFiles, rules) {
@@ -163,7 +197,7 @@ function verificationSuggestions(changedFiles, rules) {
 }
 
 function risk(type, severity, file, message) {
-  return { type, severity, file, message };
+  return enrichRisk({ type, severity, file, message });
 }
 
 function highestSeverity(risks) {

@@ -4,12 +4,13 @@ import { ensureDir, writeJson } from "./fs-utils.js";
 import { gitInfo } from "./git.js";
 import { loadRules } from "./config.js";
 import { scanFiles } from "./files.js";
+import { VERSION } from "./version.js";
 
 export function runStart(root) {
   const rules = loadRules(root);
   const baseline = {
     tool: "zzh-mobile-ai-guard",
-    version: "0.1.2",
+    version: VERSION,
     createdAt: new Date().toISOString(),
     rootName: path.basename(root),
     project: rules.project,

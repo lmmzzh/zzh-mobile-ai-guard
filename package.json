@@ -1,6 +1,6 @@
 {
   "name": "zzh-mobile-ai-guard",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A lightweight AI coding guard for iOS and Flutter projects.",
   "type": "module",
   "bin": {
@@ -12,11 +12,13 @@
     "src",
     "README.md",
     "README.zh-CN.md",
+    "docs",
+    "examples",
     "LICENSE"
   ],
   "scripts": {
     "smoke": "node ./bin/zmg.js --help",
-    "check": "node --check ./bin/zmg.js && node --check ./src/cli/index.js && node --check ./src/core/baseline.js && node --check ./src/core/check.js && node --check ./src/core/config.js && node --check ./src/core/files.js && node --check ./src/core/git.js && node --check ./src/core/glob.js && node --check ./src/core/project.js && node --check ./src/core/report.js && node --check ./src/core/status.js"
+    "check": "node --check ./bin/zmg.js && node --check ./src/cli/index.js && node --check ./src/core/baseline.js && node --check ./src/core/check.js && node --check ./src/core/config.js && node --check ./src/core/files.js && node --check ./src/core/git.js && node --check ./src/core/glob.js && node --check ./src/core/mobile-rules.js && node --check ./src/core/project.js && node --check ./src/core/report.js && node --check ./src/core/risk-explanations.js && node --check ./src/core/status.js && node --check ./src/core/version.js"
   },
   "keywords": [
     "ai",

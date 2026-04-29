@@ -26,6 +26,7 @@ export function renderMarkdownReport(result) {
   } else {
     for (const item of result.risks) {
       lines.push(`- [${item.severity}] ${item.file || "全局"}：${item.message}`);
+      appendRiskDetails(lines, item);
     }
   }
 
@@ -49,6 +50,21 @@ export function renderMarkdownReport(result) {
 
   lines.push("");
   return `${lines.join("\n")}\n`;
+}
+
+function appendRiskDetails(lines, item) {
+  if (item.explanation) {
+    lines.push(`  - 为什么要看：${item.explanation}`);
+  }
+  if (item.acceptable_when) {
+    lines.push(`  - 什么情况下可以接受：${item.acceptable_when}`);
+  }
+  if (item.action_if_unexpected) {
+    lines.push(`  - 如果不是本轮目标：${item.action_if_unexpected}`);
+  }
+  if (item.verification) {
+    lines.push(`  - 建议验证：${item.verification}`);
+  }
 }
 
 export function showReport(root) {

@@ -9,9 +9,14 @@ export function gitInfo(root) {
 }
 
 export function changedFilesFromGit(root) {
-  const output = safeGit(root, ["diff", "--name-only", "HEAD", "--"]);
-  if (!output) return null;
-  return output.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  const trackedOutput = safeGit(root, ["diff", "--name-only", "HEAD", "--"]);
+  const untrackedOutput = safeGit(root, ["ls-files", "--others", "--exclude-standard"]);
+  const files = new Set([
+    ...lines(trackedOutput),
+    ...lines(untrackedOutput)
+  ].filter(shouldReportChangedFile));
+
+  return files.size > 0 ? [...files].sort() : null;
 }
 
 export function diffNumstat(root) {
@@ -48,4 +53,13 @@ function safeGit(root, args) {
   } catch {
     return "";
   }
+}
+
+function lines(output) {
+  if (!output) return [];
+  return output.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+}
+
+function shouldReportChangedFile(file) {
+  return !file.startsWith(".zzh-mobile-ai-guard/");
 }

@@ -35,7 +35,10 @@ Advanced:
 ```bash
 zmg status
 zmg report
+zmg check --strict
 ```
+
+Use `zmg check --strict` when you want a local Git Hook to stop a commit if medium or high risk is found.
 
 ## Use with Codex CLI or other AI CLIs
 
@@ -58,6 +61,10 @@ zmg check
 ```
 
 `zmg start` and `zmg check` are terminal commands. They are not slash commands like `/start` or `/check`.
+
+For copyable prompts for Codex, Claude Code, Cursor, or other AI coding tools, see [docs/ai-usage.md](docs/ai-usage.md).
+
+For local Git Hook setup, see [docs/integrations.md](docs/integrations.md).
 
 ## What it creates
 

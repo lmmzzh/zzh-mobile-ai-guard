@@ -3,6 +3,7 @@ import { runStart } from "../core/baseline.js";
 import { runCheck } from "../core/check.js";
 import { showReport } from "../core/report.js";
 import { showStatus } from "../core/status.js";
+import { VERSION } from "../core/version.js";
 
 const HELP_TEXT = `zzh-mobile-ai-guard
 
@@ -12,6 +13,8 @@ Usage:
   zmg init      Set up guard files for the current project
   zmg start     Record project state before AI changes code
   zmg check     Check risk after AI changes code
+  zmg check --strict
+                Fail when medium or high risk is found
 
 Advanced:
   zmg report    Show the latest report path
@@ -38,7 +41,7 @@ export function runCli(args, cwd) {
         runStart(cwd);
         break;
       case "check":
-        runCheck(cwd);
+        runCheck(cwd, parseCheckOptions(args.slice(1)));
         break;
       case "report":
         showReport(cwd);
@@ -53,7 +56,7 @@ export function runCli(args, cwd) {
         break;
       case "-v":
       case "--version":
-        console.log("0.1.2");
+        console.log(VERSION);
         break;
       default:
         console.error(`Unknown command: ${command}`);
@@ -67,4 +70,21 @@ export function runCli(args, cwd) {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 2;
   }
+}
+
+function parseCheckOptions(args) {
+  const options = {
+    strict: false
+  };
+
+  for (const arg of args) {
+    if (arg === "--strict") {
+      options.strict = true;
+      continue;
+    }
+
+    throw new Error(`不支持的 check 参数：${arg}`);
+  }
+
+  return options;
 }

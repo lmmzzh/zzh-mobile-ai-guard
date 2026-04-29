@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+if ! command -v zmg >/dev/null 2>&1; then
+  echo "zmg is not installed. Run: npm install -g zzh-mobile-ai-guard"
+  exit 1
+fi
+
+zmg check --strict
+

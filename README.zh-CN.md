@@ -36,7 +36,10 @@ zmg check
 ```bash
 zmg status
 zmg report
+zmg check --strict
 ```
+
+如果你想在本地 Git Hook 里拦住中高风险改动，可以使用 `zmg check --strict`。
 
 ## 在 Codex CLI 里怎么用
 
@@ -59,6 +62,10 @@ zmg check
 ```
 
 `zmg start` 和 `zmg check` 是终端命令，不是 Codex / Claude Code / Cursor 里的 `/start` 或 `/check`。
+
+如果你想让 Codex / Claude Code / Cursor 自动配合使用，可以复制 [docs/ai-usage.zh-CN.md](docs/ai-usage.zh-CN.md) 里的提示词。
+
+如果你想接入本地 Git Hook，可以看 [docs/integrations.zh-CN.md](docs/integrations.zh-CN.md)。
 
 ## 接入后会生成什么
 
