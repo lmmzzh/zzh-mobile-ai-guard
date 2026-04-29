@@ -38,6 +38,28 @@ zmg status
 zmg report
 ```
 
+## 在 Codex CLI 里怎么用
+
+你有两种简单用法。
+
+方式一：让 Codex 帮你运行终端命令：
+
+```text
+改代码前，先在当前项目根目录运行 zmg start。
+改完后，运行 zmg check，并把风险项和报告路径告诉我。
+```
+
+方式二：另开一个终端自己运行：
+
+```bash
+cd /path/to/your/project
+zmg start
+# 让 AI 开始改代码
+zmg check
+```
+
+`zmg start` 和 `zmg check` 是终端命令，不是 Codex / Claude Code / Cursor 里的 `/start` 或 `/check`。
+
 ## 接入后会生成什么
 
 ```text

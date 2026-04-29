@@ -37,6 +37,28 @@ zmg status
 zmg report
 ```
 
+## Use with Codex CLI or other AI CLIs
+
+There are two simple ways to use `zmg` while working with an AI coding agent.
+
+Option 1: ask the AI agent to run it:
+
+```text
+Before changing code, run zmg start in the project root.
+After changing code, run zmg check and summarize the risks and report path.
+```
+
+Option 2: run it yourself in another terminal:
+
+```bash
+cd /path/to/your/project
+zmg start
+# let the AI change code
+zmg check
+```
+
+`zmg start` and `zmg check` are terminal commands. They are not slash commands like `/start` or `/check`.
+
 ## What it creates
 
 ```text
