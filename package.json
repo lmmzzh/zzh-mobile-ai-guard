@@ -1,0 +1,35 @@
+{
+  "name": "zzh-mobile-ai-guard",
+  "version": "0.1.0",
+  "description": "A lightweight AI coding guard for iOS and Flutter projects.",
+  "type": "module",
+  "bin": {
+    "zmg": "./bin/zmg.js",
+    "zzh-mobile-ai-guard": "./bin/zmg.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "smoke": "node ./bin/zmg.js --help",
+    "check": "node --check ./bin/zmg.js && node --check ./src/cli/index.js && node --check ./src/core/baseline.js && node --check ./src/core/check.js && node --check ./src/core/config.js && node --check ./src/core/files.js && node --check ./src/core/git.js && node --check ./src/core/glob.js && node --check ./src/core/project.js && node --check ./src/core/report.js && node --check ./src/core/status.js"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "ios",
+    "flutter",
+    "cli",
+    "code-review",
+    "guardrails"
+  ],
+  "author": "mq09",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
